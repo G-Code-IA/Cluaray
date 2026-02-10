@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cluaray | By G-Code</title>
+    <script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.min.js"></script>
+    <style>
+        :root { --primary: #ffce00; --bg: #0d1117; --card: #161b22; --text: #c9d1d9; --accent: #7ee787; --save: #238636; --clua: #4a9eff; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; line-height: 1.6; }
+        .container { max-width: 900px; margin: auto; }
+        
+        header { text-align: center; margin-bottom: 25px; border-bottom: 2px solid var(--primary); padding-bottom: 15px; }
+        h1 { color: var(--primary); margin: 0; letter-spacing: 2px; font-size: 2.5rem; }
+        .tagline { font-size: 1rem; color: var(--clua); font-weight: bold; }
+
+        textarea { width: 100%; height: 350px; background: #010409; color: var(--accent); border: 1px solid #30363d; padding: 15px; font-family: 'Fira Code', 'Consolas', monospace; border-radius: 12px; font-size: 16px; box-sizing: border-box; outline: none; border-left: 4px solid var(--primary); }
+        
+        .actions { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; margin-top: 15px; }
+        @media (max-width: 600px) { .actions { grid-template-columns: 1fr; } }
+        
+        button { padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; }
+        #run { background: var(--primary); color: #000; }
+        .btn-sec { background: #21262d; color: var(--text); border: 1px solid #30363d; }
+        .btn-save { background: var(--save); color: white; }
+        button:hover { filter: brightness(1.2); transform: translateY(-2px); }
+
+        #console { background: #000; color: #39ff14; padding: 15px; margin-top: 20px; min-height: 80px; border-radius: 8px; border: 1px solid #333; font-family: monospace; white-space: pre-wrap; position: relative; }
+        #console::before { content: "SALIDA DEL SISTEMA"; position: absolute; top: -10px; left: 10px; background: #333; font-size: 10px; padding: 2px 6px; border-radius: 4px; color: #aaa; }
+
+        /* WIKI Section */
+        .wiki { margin-top: 50px; border-top: 1px solid #30363d; padding-top: 30px; }
+        .wiki-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .wiki-card { background: var(--card); padding: 20px; border-radius: 10px; border: 1px solid #30363d; border-top: 3px solid var(--clua); }
+        .wiki-card h4 { margin: 0 0 10px 0; color: var(--clua); }
+        
+        footer { text-align: center; margin-top: 50px; padding: 30px; border-top: 1px solid #30363d; background: #090c10; border-radius: 20px 20px 0 0; }
+        .badge { background: var(--primary); color: #000; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>⚡ CLUARAY</h1>
+        <p class="tagline">Potencia de C + Versatilidad de Lua en tu idioma</p>
+    </header>
+
+    <input type="file" id="fileInput" style="display:none" onchange="leerArchivo(this)">
+
+    <textarea id="editor" spellcheck="false">-- Bienvenido a Cluaray
+dato lenguaje = "Cluaray"
+dato creador = "G-Code"
+
+ver f"⚡ {lenguaje} iniciado por {creador}"
+ver "Listo para ejecutar código a máxima velocidad."</textarea>
+
+    <div class="actions">
+        <button id="run" onclick="ejecutar()">▶ EJECUTAR (⚡)</button>
+        <button class="btn-sec" onclick="document.getElementById('fileInput').click()">📁 ABRIR .CLARO</button>
+        <button class="btn-save" onclick="descargar()">💾 GUARDAR PROYECTO</button>
+    </div>
+    
+    <div style="margin-top:10px;">
+        <button class="btn-sec" style="width:100%" onclick="toggleExt()">⚙️ CONFIGURACIÓN DEL NÚCLEO</button>
+    </div>
+
+    <div id="panel-ext" style="display:none; background: var(--card); padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid var(--primary);">
+        <label style="font-size: 12px; color: var(--primary);"><b>DICCIONARIO DE EXTENSIÓN (JSON):</b></label>
+        <textarea id="json-ext" style="height: 60px; margin-top: 10px; font-size: 13px;">{"limpiar": "js.global:limpiarConsola()", "azar": "math.random"}</textarea>
+    </div>
+
+    <div id="console">Esperando instrucciones...</div>
+
+    <section class="wiki">
+        <h2 style="color:var(--primary); text-align: center;">📖 DOCUMENTACIÓN</h2>
+        <div class="wiki-grid">
+            <div class="wiki-card">
+                <h4>⚡ Filosofía Cluaray</h4>
+                <p>Inspirado en la velocidad de ejecución de <b>C</b> y la simplicidad de <b>Lua</b>. Diseñado para ser aprendido en minutos y ejecutado en milisegundos.</p>
+            </div>
+            <div class="wiki-card">
+                <h4>🛠️ G-Code Architecture</h4>
+                <p>El núcleo traduce palabras clave en español a funciones de alto rendimiento, permitiendo prototipado rápido directamente en el navegador.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Desarrollado por <span class="badge">G-Code</span> & Gemini (IA)</p>
+        <p style="font-size: 0.8rem; color: #555;">© 2026 Proyecto Cluaray - Código Libre</p>
+    </footer>
+</div>
+
+<script>
+    const consola = document.getElementById('console');
+    const editor = document.getElementById('editor');
+
+    function descargar() {
+        const blob = new Blob([editor.value], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'proyecto.claro';
+        a.click();
+    }
+
+    function leerArchivo(input) {
+        const reader = new FileReader();
+        reader.onload = (e) => { editor.value = e.target.result; consola.innerText = "Archivo cargado."; };
+        reader.readAsText(input.files[0]);
+    }
+
+    function limpiar(t) {
+        return t.replace(/[\uFEFF\u200B\u00A0]/g, '').replace(/([áéíóúñÑ0-9_]+)(?=(?:[^"]*"[^"]*")*[^"]*$)/g, (m) => {
+            return m.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ñ/g, "n");
+        });
+    }
+
+    window.imprimirEnPantalla = (t) => {
+        if (consola.innerText === "Esperando instrucciones...") consola.innerText = "";
+        consola.innerText += t + "\n";
+    };
+
+    window.limpiarConsola = () => { consola.innerText = ""; };
+
+    function toggleExt() {
+        const p = document.getElementById('panel-ext');
+        p.style.display = p.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function ejecutar() {
+        consola.innerText = "";
+        let code = editor.value;
+        try {
+            const ext = JSON.parse(document.getElementById('json-ext').value);
+            for (let [p, l] of Object.entries(ext)) {
+                code = code.replace(new RegExp(`\\b${p}\\b`, 'g'), l);
+            }
+        } catch(e) {}
+        
+        let c = limpiar(code);
+        c = c.replace(/\btarea\s+/g, 'function ').replace(/\bdato\s+/g, 'local ')
+             .replace(/\bfin\b/g, 'end').replace(/\bsi\s+/g, 'if ')
+             .replace(/\bentonces\b/g, 'then').replace(/\blista\s+/g, 'local ')
+             .replace(/\[/g, '{').replace(/\]/g, '}');
+        c = c.replace(/f"(.*?)\{(.*?)\}(.*?)"/g, (m, p1, p2, p3) => {
+            return `"${p1}" .. (type(${p2}) == "table" and "{ " .. table.concat(${p2}, ", ") .. " }" or tostring(${p2})) .. "${p3}"`;
+        });
+        c = c.replace(/\bver\s+(.*)/g, 'print($1)');
+        const helper = `print = function(...) local args = {...} local out = {} for i, v in ipairs(args) do table.insert(out, (type(v) == "table" and "{ "..table.concat(v,", ").." }" or tostring(v))) end js.global:imprimirEnPantalla(table.concat(out, " ")) end `;
+        try { fengari.load(helper + c)(); } catch (err) { consola.innerHTML = `<span style="color:#ff6b6b">❌ ERROR DE NÚCLEO: ${err}</span>`; }
+    }
+</script>
+</body>
+</html>
