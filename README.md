@@ -3,12 +3,12 @@
 
 Cluaray es un lenguaje híbrido diseñado para ser liviano y multiplataforma.
 
-## 🚀 Instalación Rápida
-### PC (Lubuntu) & Android (Termux)
-1. Instala Python y Lua.
-2. Crea un lanzador en tu ruta de ejecutables (`/usr/local/bin` o `$PREFIX/bin`) llamado `cluaray`.
-3. ¡Ejecuta tus scripts fácilmente!
-
+## 🚀 Instalación
+```bash
+git clone [https://github.com/G-Code-IA/Cluaray.git](https://github.com/G-Code-IA/Cluaray.git)
+cd Cluaray
+chmod +x instalar.sh
+./instalar.sh
 ```bash
 cluaray proyecto.clu
 ```
