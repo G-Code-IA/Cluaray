@@ -1,4 +1,4 @@
-# ⚡ Cluaray v2.2
+# ⚡ Cluaray v1.0
 **Desarrollado por G-Code-IA**
 
 Cluaray es un lenguaje híbrido diseñado para ser liviano y multiplataforma.
