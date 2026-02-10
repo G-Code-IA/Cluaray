@@ -1,100 +1,31 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cluaray ⚡ | G-Code-IA</title>
-    <script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.min.js"></script>
-    <style>
-        :root { --primary: #ffce00; --bg: #0d1117; --card: #161b22; --text: #c9d1d9; --accent: #7ee787; --save: #238636; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
-        .container { max-width: 900px; margin: auto; }
-        header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
-        h1 { color: var(--primary); margin: 0; letter-spacing: 2px; }
-        textarea { width: 100%; height: 350px; background: #010409; color: var(--accent); border: 1px solid #30363d; padding: 15px; font-family: 'Consolas', monospace; border-radius: 8px; font-size: 16px; box-sizing: border-box; outline: none; border-left: 4px solid var(--primary); }
-        .actions { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; margin-top: 15px; }
-        @media (max-width: 600px) { .actions { grid-template-columns: 1fr; } }
-        button { padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.2s; }
-        #run { background: var(--primary); color: #000; }
-        .btn-sec { background: #21262d; color: var(--text); border: 1px solid #30363d; }
-        .btn-save { background: var(--save); color: white; }
-        button:hover { opacity: 0.8; transform: translateY(-1px); }
-        #console { background: #000; color: #39ff14; padding: 15px; margin-top: 20px; min-height: 80px; border-radius: 8px; font-family: monospace; white-space: pre-wrap; border: 1px solid #333; }
-        #panel-ext { display: none; background: var(--card); padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px dashed var(--primary); }
-        .footer { text-align: center; margin-top: 40px; font-size: 0.8rem; color: #8b949e; border-top: 1px solid #333; padding-top: 20px; }
-    </style>
-</head>
-<body>
-<div class="container">
-    <header><h1>⚡ CLUARAY</h1></header>
-    <input type="file" id="fileInput" accept=".clu,.cluaray" style="display:none" onchange="leerArchivo(this)">
-    
-    <textarea id="editor" spellcheck="false">-- Proyecto Cluaray
-dato desarrollador = "G-Code-IA"
-ver f"⚡ Motor Cluaray activo. Usuario: {desarrollador}"
-
-lista hardware = ["Pentium 4", "Lubuntu", "Redmi"]
-ver f"Sistemas compatibles: {hardware}"</textarea>
-
-    <div class="actions">
-        <button id="run" onclick="ejecutar()">▶ Ejecutar (⚡)</button>
-        <button class="btn-sec" onclick="document.getElementById('fileInput').click()">📁 Abrir .clu</button>
-        <button class="btn-save" onclick="descargar()">💾 Guardar .clu</button>
-    </div>
-
-    <button class="btn-sec" style="width:100%; margin-top:10px; font-size: 11px;" onclick="document.getElementById('panel-ext').style.display = document.getElementById('panel-ext').style.display === 'block' ? 'none' : 'block'">⚙️ CONFIGURACIÓN DE DICCIONARIO (JSON)</button>
-
-    <div id="panel-ext">
-        <label style="font-size: 12px; color: var(--primary);">Plugins JSON:</label>
-        <textarea id="json-ext" style="height: 60px; margin-top: 10px; font-size: 13px; color: #fff;">{"limpiar": "js.global:limpiarConsola()", "azar": "math.random(1,100)"}</textarea>
-    </div>
-
-    <div id="console">Consola Cluaray lista...</div>
-    <div class="footer">Arquitectura por <b>G-Code-IA</b> & Gemini (IA) - 2026</div>
-</div>
-
 <script>
     const consola = document.getElementById('console');
     const editor = document.getElementById('editor');
     const jsonExt = document.getElementById('json-ext');
 
     window.imprimir = (t) => {
-        if(consola.innerText === "Consola Cluaray lista...") consola.innerText = "";
+        if(consola.innerText.includes("Consola Cluaray")) consola.innerText = "";
         consola.innerText += t + "\n";
     };
-    window.limpiarConsola = () => { consola.innerText = ""; };
-
-    function descargar() {
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(new Blob([editor.value], {type:'text/plain'}));
-        a.download = 'proyecto.clu'; a.click();
-    }
-
-    function leerArchivo(i) {
-        const r = new FileReader();
-        r.onload = (e) => { editor.value = e.target.result; };
-        r.readAsText(i.files[0]);
-    }
 
     function ejecutar() {
         consola.innerText = "";
         let raw = editor.value;
 
-        // Aplicar Plugins JSON (Sincronizado con Python)
+        // 1. Aplicar Plugins JSON (Sincronizado)
         try {
             const ext = JSON.parse(jsonExt.value);
             for (let [p, l] of Object.entries(ext)) {
                 raw = raw.replace(new RegExp(`\\b${p}\\b`, 'g'), l);
             }
-        } catch(e) { console.error("Error en JSON"); }
+        } catch(e) {}
 
-        // Traducción Cluaray -> Lua
+        // 2. Traducción Espejo
         let c = raw.replace(/\btarea\s+/g, 'function ').replace(/\bdato\s+/g, 'local ')
                    .replace(/\bfin\b/g, 'end').replace(/\bsi\s+/g, 'if ')
                    .replace(/\bentonces\b/g, 'then').replace(/\blista\s+/g, 'local ')
                    .replace(/\[/g, '{').replace(/\]/g, '}');
         
-        // f-strings
         c = c.replace(/f"(.*?)\{(.*?)\}(.*?)"/g, (m, p1, p2, p3) => {
             return `"${p1}" .. tostring(${p2}) .. "${p3}"`;
         });
@@ -106,5 +37,3 @@ ver f"Sistemas compatibles: {hardware}"</textarea>
         try { fengari.load(helper + c)(); } catch (e) { consola.innerText = "❌ ERROR: " + e; }
     }
 </script>
-</body>
-</html>
