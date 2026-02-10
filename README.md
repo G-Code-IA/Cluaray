@@ -11,11 +11,12 @@ Cluaray es un lenguaje híbrido diseñado para ser liviano y multiplataforma.
 
 ```bash
 cluaray proyecto.clu
+```
 
-
-📖 Comandos Principales
+## 📖 Comandos Principales
 cluaray --ayuda: Menú de ayuda.
 dato: Variables.
 ver: Salida en pantalla.
 diccionario.json: Sistema de plugins para crear tus propias librerías.
+
 Arquitectura G-Code-IA Core
