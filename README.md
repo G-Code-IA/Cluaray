@@ -1,27 +1,21 @@
-# ⚡ Cluaray
+# ⚡ Cluaray v2.2
+**Desarrollado por G-Code-IA**
 
-**Cluaray** es un lenguaje de programación de código abierto diseñado para ser rápido como un rayo, potente como **C** y versátil como **Lua**, todo en un entorno amigable en español.
+Cluaray es un lenguaje híbrido diseñado para ser liviano y multiplataforma.
 
-## 🚀 Filosofía
-El nombre proviene de la fusión de **C** (velocidad), **Lua** (flexibilidad) y **Ray** (rayo). Fue creado con la idea de que cualquier persona pueda aprender a programar sin la barrera del idioma inglés, permitiendo prototipado rápido directamente desde el navegador o en sistemas locales.
+## 🚀 Instalación Rápida
+### PC (Lubuntu) & Android (Termux)
+1. Instala Python y Lua.
+2. Crea un lanzador en tu ruta de ejecutables (`/usr/local/bin` o `$PREFIX/bin`) llamado `cluaray`.
+3. ¡Ejecuta tus scripts fácilmente!
 
-## 🛠️ Especificaciones Técnicas
-- **Arquitectura:** G-Code-IA Core.
-- **Motor:** Basado en Fengari (Lua VM para Web).
-- **Compatibilidad:** Diseñado para funcionar en dispositivos de recursos limitados (probado con éxito en sistemas Pentium 4 con Lubuntu y dispositivos móviles con 8GB de RAM).
-- **Extensiones:** Permite inyección de comandos vía JSON para expandir el lenguaje.
+```bash
+cluaray proyecto.clu
 
-## 👤 Autoría y Colaboración
-Este proyecto es una muestra de co-creación entre humanos e Inteligencia Artificial:
-- **Visión, Arquitectura y Dirección:** [G-Code-IA](https://github.com/G-Code-IA)
-- **Implementación Técnica:** Gemini (IA)
 
-## 📖 Comandos Rápidos
-- `dato`: Definir variables.
-- `ver`: Imprimir en consola.
-- `lista`: Crear arreglos/tablas.
-- `tarea`: Definir funciones.
-- `f"..."`: Formateo de strings (Interpolación).
-
----
-*Hecho con ❤️ para democratizar el código.*
+📖 Comandos Principales
+cluaray --ayuda: Menú de ayuda.
+dato: Variables.
+ver: Salida en pantalla.
+diccionario.json: Sistema de plugins para crear tus propias librerías.
+Arquitectura G-Code-IA Core
