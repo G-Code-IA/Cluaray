@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cluaray ⚡ | By G-Code-IA</title>
+    <script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.min.js"></script>
+    <style>
+        :root { 
+            --primary: #ffce00; 
+            --bg: #0d1117; 
+            --card: #161b22; 
+            --text: #c9d1d9; 
+            --accent: #7ee787; 
+            --save: #238636; 
+            --clua: #4a9eff; 
+        }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; line-height: 1.6; }
+        .container { max-width: 900px; margin: auto; }
+        
+        header { text-align: center; margin-bottom: 25px; border-bottom: 2px solid var(--primary); padding-bottom: 15px; }
+        h1 { color: var(--primary); margin: 0; letter-spacing: 3px; font-size: 2.5rem; text-shadow: 2px 2px 10px rgba(255, 206, 0, 0.3); }
+        .tagline { font-size: 1rem; color: var(--clua); font-weight: bold; text-transform: uppercase; }
+
+        textarea { width: 100%; height: 380px; background: #010409; color: var(--accent); border: 1px solid #30363d; padding: 15px; font-family: 'Fira Code', 'Consolas', monospace; border-radius: 12px; font-size: 15px; box-sizing: border-box; outline: none; border-left: 5px solid var(--primary); box-shadow: inset 0 0 15px rgba(0,0,0,0.5); }
+        
+        .actions { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; margin-top: 15px; }
+        @media (max-width: 600px) { .actions { grid-template-columns: 1fr; } }
+        
+        button { padding: 14px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; }
+        #run { background: var(--primary); color: #000; font-size: 1.1rem; }
+        .btn-sec { background: #21262d; color: var(--text); border: 1px solid #30363d; }
+        .btn-save { background: var(--save); color: white; }
+        button:hover { filter: brightness(1.2); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+
+        #console { background: #000; color: #39ff14; padding: 20px; margin-top: 25px; min-height: 100px; border-radius: 8px; border: 1px solid #333; font-family: 'Consolas', monospace; white-space: pre-wrap; position: relative; box-shadow: 0 0 20px rgba(57, 255, 20, 0.05); }
+        #console::before { content: "NÚCLEO CLUARAY ⚡"; position: absolute; top: -10px; left: 10px; background: #333; font-size: 10px; padding: 2px 8px; border-radius: 4px; color: var(--primary); font-weight: bold; }
+
+        /* WIKI Section */
+        .wiki { margin-top: 50px; border-top: 1px solid #30363d; padding-top: 30px; }
+        .wiki-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .wiki-card { background: var(--card); padding: 20px; border-radius: 10px; border: 1px solid #30363d; transition: 0.3s; }
+        .wiki-card:hover { border-color: var(--clua); background: #1c2128; }
+        .wiki-card h4 { margin: 0 0 10px 0; color: var(--clua); border-bottom: 1px solid #30363d; padding-bottom: 5px; }
+        
+        footer { text-align: center; margin-top: 50px; padding: 40px; border-top: 1px solid #30363d; background: #090c10; border-radius: 20px 20px 0 0; }
+        .badge { background: var(--primary); color: #000; padding: 3px 10px; border-radius: 4px; font-weight: bold; font-size: 0.9rem; }
+        
+        #panel-ext { display: none; background: var(--card); padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px dashed var(--primary); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>⚡ CLUARAY</h1>
+        <p class="tagline">G-Code-IA Architecture | C-Lua Powered</p>
+    </header>
+
+    <input type="file" id="fileInput" style="display:none" onchange="leerArchivo(this)">
+
+    <textarea id="editor" spellcheck="false">-- [[ LOGO CLUARAY ]]
+--    _____ _      _    _         _____              ⚡
+--   / ____| |    | |  | |  /\   |  __ \     /\      \ \
+--  | |    | |    | |  | | /  \  | |__) |   /  \      \ \
+--  | |    | |    | |  | |/ /\ \ |  _  /   / /\ \      > >
+--  | |____| |____| |__| / ____ \| | \ \  / ____ \    / /
+--   \_____|______|\____/_/    \_\_|  \_\/_/    \_\  /_/
+-- --------------------------------------------------------
+-- Desarrollado por: G-Code-IA
+
+dato saludo = "¡Bienvenido al núcleo de Cluaray!"
+ver saludo
+ver "⚡ Estado: Listo para alta velocidad."
+
+lista datos = ["Rápido", "Libre", "Potente"]
+ver f"Atributos: {datos}"</textarea>
+
+    <div class="actions">
+        <button id="run" onclick="ejecutar()">▶ EJECUTAR (⚡)</button>
+        <button class="btn-sec" onclick="document.getElementById('fileInput').click()">📁 ABRIR .CLARO</button>
+        <button class="btn-save" onclick="descargar()">💾 GUARDAR</button>
+    </div>
+    
+    <div style="margin-top:10px;">
+        <button class="btn-sec" style="width:100%; font-size: 0.8rem;" onclick="toggleExt()">⚙️ AJUSTES DEL DICCIONARIO</button>
+    </div>
+
+    <div id="panel-ext">
+        <label style="font-size: 12px; color: var(--primary); font-weight: bold;">EXTENSIÓN JSON:</label>
+        <textarea id="json-ext" style="height: 60px; margin-top: 10px; font-size: 13px; color: #fff;">{"limpiar": "js.global:limpiarConsola()", "azar": "math.random"}</textarea>
+    </div>
+
+    <div id="console">Cargando núcleo...</div>
+
+    <section class="wiki">
+        <h2 style="color:var(--primary); text-align: center; letter-spacing: 2px;">DOCUMENTACIÓN</h2>
+        <div class="wiki-grid">
+            <div class="wiki-card">
+                <h4>⚡ Motor Cluaray</h4>
+                <p>Combina la eficiencia de <b>C</b> con la sintaxis de <b>Lua</b> en español. Ideal para aprender lógica pura.</p>
+            </div>
+            <div class="wiki-card">
+                <h4>🛠️ G-Code-IA Core</h4>
+                <p>Arquitectura optimizada para dispositivos ligeros como <b>Redmi</b> o laptops con <b>Lubuntu</b>.</p>
+            </div>
+            <div class="wiki-card">
+                <h4>💾 Persistencia</h4>
+                <p>Guarda tus archivos con extensión <code>.claro</code> para editarlos más tarde o usarlos en local.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Sistema diseñado por <span class="badge">G-Code-IA</span> & Gemini (IA)</p>
+        <p style="font-size: 0.8rem; color: #555;">© 2026 Cluaray Project - Código Abierto y Libre</p>
+    </footer>
+</div>
+
+<script>
+    const consola = document.getElementById('console');
+    const editor = document.getElementById('editor');
+
+    function descargar() {
+        const blob = new Blob([editor.value], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'script.claro';
+        a.click();
+    }
+
+    function leerArchivo(input) {
+        const reader = new FileReader();
+        reader.onload = (e) => { editor.value = e.target.result; consola.innerText = "Script cargado exitosamente."; };
+        reader.readAsText(input.files[0]);
+    }
+
+    function limpiar(t) {
+        return t.replace(/[\uFEFF\u200B\u00A0]/g, '').replace(/([áéíóúñÑ0-9_]+)(?=(?:[^"]*"[^"]*")*[^"]*$)/g, (m) => {
+            return m.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ñ/g, "n");
+        });
+    }
+
+    window.imprimirEnPantalla = (t) => {
+        if (consola.innerText === "Cargando núcleo..." || consola.innerText === "Esperando instrucciones...") consola.innerText = "";
+        consola.innerText += t + "\n";
+    };
+
+    window.limpiarConsola = () => { consola.innerText = ""; };
+
+    function toggleExt() {
+        const p = document.getElementById('panel-ext');
+        p.style.display = p.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Esperar a que Fengari cargue
+    const initCheck = setInterval(() => {
+        if (typeof fengari !== 'undefined') {
+            consola.innerText = "Esperando instrucciones...";
+            clearInterval(initCheck);
+        }
+    }, 100);
+
+    function ejecutar() {
+        consola.innerText = "";
+        let code = editor.value;
+        try {
+            const ext = JSON.parse(document.getElementById('json-ext').value);
+            for (let [p, l] of Object.entries(ext)) {
+                code = code.replace(new RegExp(`\\b${p}\\b`, 'g'), l);
+            }
+        } catch(e) {}
+        
+        let c = limpiar(code);
+        c = c.replace(/\btarea\s+/g, 'function ').replace(/\bdato\s+/g, 'local ')
+             .replace(/\bfin\b/g, 'end').replace(/\bsi\s+/g, 'if ')
+             .replace(/\bentonces\b/g, 'then').replace(/\blista\s+/g, 'local ')
+             .replace(/\[/g, '{').replace(/\]/g, '}');
+             
+        c = c.replace(/f"(.*?)\{(.*?)\}(.*?)"/g, (m, p1, p2, p3) => {
+            return `"${p1}" .. (type(${p2}) == "table" and "{ " .. table.concat(${p2}, ", ") .. " }" or tostring(${p2})) .. "${p3}"`;
+        });
+        
+        c = c.replace(/\bver\s+(.*)/g, 'print($1)');
+        
+        const helper = `print = function(...) local args = {...} local out = {} for i, v in ipairs(args) do table.insert(out, (type(v) == "table" and "{ "..table.concat(v,", ").." }" or tostring(v))) end js.global:imprimirEnPantalla(table.concat(out, " ")) end `;
+        
+        try { 
+            fengari.load(helper + c)(); 
+        } catch (err) { 
+            consola.innerHTML = `<span style="color:#ff6b6b">❌ ERROR DE NÚCLEO: ${err}</span>`; 
+        }
+    }
+</script>
+</body>
+</html>
