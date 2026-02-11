@@ -9,6 +9,7 @@ git clone https://github.com/G-Code-IA/Cluaray.git
 cd Cluaray
 chmod +x instalar.sh
 ./instalar.sh
+```
 ```bash
 cluaray proyecto.clu
 ```
