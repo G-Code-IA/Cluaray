@@ -5,7 +5,7 @@ Cluaray es un lenguaje híbrido diseñado para ser liviano y multiplataforma.
 
 ## 🚀 Instalación
 ```bash
-git clone [https://github.com/G-Code-IA/Cluaray.git](https://github.com/G-Code-IA/Cluaray.git)
+git clone https://github.com/G-Code-IA/Cluaray.git
 cd Cluaray
 chmod +x instalar.sh
 ./instalar.sh
