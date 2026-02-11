@@ -1,0 +1,9 @@
+{
+  "azar": "math.random(1, 100)",
+  "limpiar": "os.execute('clear')",
+  "fecha": "os.date('%d/%m/%Y')",
+  "hora": "os.date('%H:%M:%S')",
+  "pi": "math.pi",
+  "raiz": "math.sqrt",
+  "pausa": "os.execute('sleep 2')"
+}
