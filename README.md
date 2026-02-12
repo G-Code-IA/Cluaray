@@ -1,4 +1,4 @@
-#⚡ Cluaray v1.0
+⚡ Cluaray v1.0
 El lenguaje de programación educativo en español. Desarrollado por G-Code-IA
 Cluaray no es una IA; es un lenguaje de programación híbrido y transpilador que traduce una sintaxis amigable en español a código profesional en Lua. Está optimizado para funcionar en cualquier lugar: desde un Pentium 4 con Lubuntu hasta un Redmi Note 14 con Termux.
 
