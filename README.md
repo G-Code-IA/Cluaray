@@ -24,7 +24,7 @@ cluaray proyecto.clu
 ```
 ## 📘 Guía Rápida de Sintaxis
 Cluaray convierte la lógica compleja en palabras simples:
-```markdown
+
 | Comando | Función | Ejemplo de uso |
 | :--- | :--- | :--- |
 | **dato** | Define una variable local | `dato nivel = 1` |
@@ -36,4 +36,3 @@ Cluaray convierte la lógica compleja en palabras simples:
 | **siempre hacer** | Crea un bucle infinito | `siempre hacer ... romper ... fin` |
 | **por cada** | Bucle contado (estilo for) | `por cada i desde 1 hasta 10 hacer` |
 | **nota** | Añade comentarios al código | `nota Esto es un comentario` |
-```
