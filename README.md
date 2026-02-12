@@ -1,6 +1,6 @@
 # ⚡Cluaray v1.0
 El lenguaje de programación educativo en español. Desarrollado por G-Code-IA
-Cluaray no es una IA; es un lenguaje de programación híbrido y transpilador que traduce una sintaxis amigable en español a código profesional en Lua. Está optimizado para funcionar en cualquier lugar: desde un Pentium 4 con Lubuntu hasta un Redmi Note 14 con Termux.
+Cluaray no es una IA; es un lenguaje de programación híbrido y transpilador que traduce una sintaxis amigable en español a código profesional en Lua. Está optimizado para funcionar en cualquier lugar.
 
 ## 🌟¿Por qué Cluaray?
 Sintaxis Natural: Programa usando palabras como dato, tarea y si.
@@ -10,7 +10,7 @@ Multiplataforma: El mismo código corre en Android (Termux) y Linux/PC.
 
 ## 🚀Instalación Rápida
 Cluaray requiere tener Python 3 y Lua instalados en el sistema.
-```bash
+```
 # 1. Clonar el ecosistema
 git clone https://github.com/G-Code-IA/Cluaray.git
 cd Cluaray
@@ -39,3 +39,16 @@ Cluaray convierte la lógica compleja en palabras simples:
 
 ## 🛠️ Extensibilidad (Diccionarios)
 La potencia de Cluaray reside en su archivo diccionario.json. Puedes añadir tus propios comandos mapeándolos a funciones de Lua. Esto permite que el lenguaje crezca según las necesidades del aula o del proyecto.
+
+## 📦 Compilación
+¿Quieres compartir tu programa? Cluaray puede generar un ejecutable autónomo:
+```
+cluaray --compilar proyecto.clu
+```
+Esto generará un archivo .sh que puedes enviar a cualquier persona con Linux.
+
+## 🏛️ Arquitectura G-Code-IA Core
+Cluaray utiliza un motor de transpilación por capas:
+Analizador: Valida la sintaxis en español.
+Traductor: Mapea los comandos al núcleo de Lua.
+Ejecutor: Corre el código de forma eficiente protegiendo la memoria del hardware.
