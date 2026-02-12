@@ -79,4 +79,5 @@ Si has creado una librería útil (colores, matemáticas avanzadas, manejo de ar
 Haz un Fork del repositorio Cluaray-Libs.
 Sube tu archivo .json.
 Envía un Pull Request.
+Más información en https://github.com/G-Code-IA/Cluaray-Libs
 <!-- end list -->
