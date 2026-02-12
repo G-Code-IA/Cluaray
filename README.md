@@ -8,6 +8,13 @@ Ligero como una pluma: Diseñado para equipos con pocos recursos (como 4GB de RA
 Ecosistema Modular: Crea tus propias librerías personalizadas usando archivos JSON.
 Multiplataforma: El mismo código corre en Android (Termux) y Linux/PC.
 
+## 💻 Requisitos del Sistema
+* **CPU:** Desde Pentium 4 / Procesadores ARM básicos.
+* **RAM:** Mínimo 256MB (Ideal 512MB o más).
+* **SO:** Linux (Lubuntu recomendado), Android (Termux).
+* **Dependencias:** Python 3.x y Lua 5.x.
+* 
+
 ## 🚀Instalación Rápida
 Cluaray requiere tener Python 3 y Lua instalados en el sistema.
 ```
@@ -36,7 +43,17 @@ Cluaray convierte la lógica compleja en palabras simples:
 | **siempre hacer** | Crea un bucle infinito | `siempre hacer ... romper ... fin` |
 | **por cada** | Bucle contado (estilo for) | `por cada i desde 1 hasta 10 hacer` |
 | **nota** | Añade comentarios al código | `nota Esto es un comentario` |
+### 📝 Ejemplo rápido (`hola.clu`)
+```cluaray
+dato nombre = pedir "Hola, ¿cómo te llamas?"
+ver f"¡Bienvenido a Cluaray, {nombre}!"
 
+siempre hacer
+    dato n = pedir_numero "Dime un número (0 para salir):"
+    si n == 0 entonces romper fin
+    ver f"El doble de tu número es: {n * 2}"
+fin
+```
 ## 🛠️ Extensibilidad (Diccionarios)
 La potencia de Cluaray reside en su archivo diccionario.json. Puedes añadir tus propios comandos mapeándolos a funciones de Lua. Esto permite que el lenguaje crezca según las necesidades del aula o del proyecto.
 
