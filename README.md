@@ -52,3 +52,17 @@ Cluaray utiliza un motor de transpilación por capas:
 Analizador: Valida la sintaxis en español.
 Traductor: Mapea los comandos al núcleo de Lua.
 Ejecutor: Corre el código de forma eficiente protegiendo la memoria del hardware.
+
+## 🧩 Librerías y Personalización (Plugins JSON)
+Una de las mayores ventajas de **Cluaray** es que es un lenguaje abierto y extensible. No estás limitado a los comandos básicos; puedes crear tus propias librerías usando archivos `.json`.
+
+### ¿Cómo funcionan?
+El motor de Cluaray busca automáticamente archivos `.json` en su directorio. Estos archivos funcionan como un "mapeo" que traduce tus palabras en español a funciones potentes de Lua.
+
+**Ejemplo de una librería personalizada (`mates.json`):**
+```json
+{
+  "raiz": "math.sqrt",
+  "absoluto": "math.abs",
+  "azar": "math.random"
+}
