@@ -36,3 +36,6 @@ Cluaray convierte la lógica compleja en palabras simples:
 | **siempre hacer** | Crea un bucle infinito | `siempre hacer ... romper ... fin` |
 | **por cada** | Bucle contado (estilo for) | `por cada i desde 1 hasta 10 hacer` |
 | **nota** | Añade comentarios al código | `nota Esto es un comentario` |
+
+## 🛠️ Extensibilidad (Diccionarios)
+La potencia de Cluaray reside en su archivo diccionario.json. Puedes añadir tus propios comandos mapeándolos a funciones de Lua. Esto permite que el lenguaje crezca según las necesidades del aula o del proyecto.
