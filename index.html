@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cluaray Web ⚡ | G-Code-IA</title>
+    <script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.min.js"></script>
+    <style>
+        :root { --primary: #ffce00; --bg: #0d1117; --card: #161b22; --text: #c9d1d9; --accent: #7ee787; --save: #238636; --error: #f85149; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
+        .container { max-width: 950px; margin: auto; }
+        header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
+        h1 { color: var(--primary); margin: 0; letter-spacing: 2px; }
+        .desc { font-size: 0.9rem; color: #8b949e; margin-top: 5px; }
+        textarea { width: 100%; height: 380px; background: #010409; color: var(--accent); border: 1px solid #30363d; padding: 15px; font-family: 'Fira Code', monospace; border-radius: 8px; font-size: 15px; box-sizing: border-box; border-left: 5px solid var(--primary); outline: none; }
+        .actions { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; margin-top: 15px; }
+        button { padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        button:hover { opacity: 0.8; transform: translateY(-1px); }
+        #run { background: var(--primary); color: #000; font-size: 1.1rem; }
+        .btn-sec { background: #21262d; color: var(--text); border: 1px solid #30363d; }
+        .btn-save { background: var(--save); color: white; }
+        #console { background: #000; color: #39ff14; padding: 15px; margin-top: 20px; min-height: 120px; border-radius: 8px; font-family: monospace; white-space: pre-wrap; border: 1px solid #333; box-shadow: inset 0 0 10px #000; }
+        #panel-ext { display: none; background: var(--card); padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px dashed var(--primary); }
+        .footer { text-align: center; margin-top: 40px; font-size: 0.85rem; color: #8b949e; border-top: 1px solid #30363d; padding-top: 20px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>⚡ CLUARAY WEB</h1>
+        <div class="desc">Entorno Educativo Transpilador G-Code-IA Core</div>
+    </header>
+
+    <textarea id="editor" spellcheck="false">nota --- Prueba Cluaray Web ---
+dato nombre = "Estudiante"
+ver f"¡Hola {nombre}! Bienvenido a la programación."
+
+dato numeros = [10, 20, 30]
+ver "Tu lista de datos es:"
+ver numeros
+
+por cada i desde 1 hasta 3 hacer
+    ver f"Procesando elemento {i}..."
+fin</textarea>
+
+    <div class="actions">
+        <button id="run" onclick="ejecutar()">▶ Ejecutar Código</button>
+        <button class="btn-sec" onclick="document.getElementById('fileInput').click()">📁 Abrir .clu</button>
+        <button class="btn-save" onclick="descargar()">💾 Guardar</button>
+    </div>
+
+    <input type="file" id="fileInput" accept=".clu,.cluaray" style="display:none" onchange="leerArchivo(this)">
+    
+    <button class="btn-sec" style="width:100%; margin-top:10px; font-size: 11px; padding: 5px;" onclick="tgl()">⚙️ CONFIGURAR DICCIONARIO (JSON)</button>
+    
+    <div id="panel-ext">
+        <label style="font-size: 12px; color: var(--primary);">Plugins y Mapeos:</label>
+        <textarea id="json-ext" style="height: 60px; margin-top: 5px;">{"azar": "math.random(1,100)", "limpiar": "js.global:limpiarConsola()"}</textarea>
+    </div>
+
+    <div id="console">Consola lista para Cluaray...</div>
+
+    <div class="footer">
+        Desarrollado por <strong>G-Code-IA</strong> | Motor v1.0 Transpilado vía Fengari-Lua
+    </div>
+</div>
+
+<script>
+    const consola = document.getElementById('console');
+    const editor = document.getElementById('editor');
+    const jsonExt = document.getElementById('json-ext');
+
+    function tgl() { 
+        const p = document.getElementById('panel-ext'); 
+        p.style.display = p.style.display === 'block' ? 'none' : 'block'; 
+    }
+
+    window.imprimir = (t) => { consola.innerText += t + "\n"; };
+    window.limpiarConsola = () => { consola.innerText = ""; };
+
+    function descargar() { 
+        const a = document.createElement('a'); 
+        a.href = URL.createObjectURL(new Blob([editor.value], {type:'text/plain'})); 
+        a.download = 'mi_programa.clu'; 
+        a.click(); 
+    }
+
+    function leerArchivo(i) { 
+        const r = new FileReader(); 
+        r.onload = (e) => { editor.value = e.target.result; }; 
+        r.readAsText(i.files[0]); 
+    }
+
+    // NÚCLEO LUA PARA WEB (Traducción de _mostrar_inteligente)
+    const LUA_WEB_HELPER = `
+    function _mostrar_inteligente(algo)
+        if type(algo) == "table" then
+            local elementos = {}
+            for k, v in pairs(algo) do
+                local val = type(v) == "string" and '"'..v..'"' or tostring(v)
+                if type(k) == "string" then table.insert(elementos, k .. " = " .. val)
+                else table.insert(elementos, val) end
+            end
+            js.global:imprimir("{ " .. table.concat(elementos, ", ") .. " }")
+        else js.global:imprimir(tostring(algo)) end
+    end
+    print = _mostrar_inteligente
+    `;
+
+    function ejecutar() {
+        consola.innerText = "";
+        let lineas = editor.value.split('\n');
+        let trad = [];
+
+        // Cargar Reglas JSON
+        let reglas = {};
+        try { reglas = JSON.parse(jsonExt.value); } catch(e) { console.error("JSON Error"); }
+
+        lineas.forEach(linea => {
+            let l = linea.trim();
+            if (!l || l.startsWith('nota')) {
+                trad.push("-- " + (l.startsWith('nota') ? l.slice(5) : ""));
+                return;
+            }
+
+            // Aplicar Diccionario JSON
+            for (let [p, reemplazo] of Object.entries(reglas)) {
+                l = l.replace(new RegExp(`\\b${p}\\b`, 'g'), reemplazo);
+            }
+
+            // Transpilación Core (Sincronizada con cluaray.py)
+            l = l.replace(/^\s*tarea\s+/g, 'function ')
+                 .replace(/\bdato\s+/g, 'local ')
+                 .replace(/\bfin\b/g, 'end')
+                 .replace(/\bsiempre\s+hacer\b/g, 'while true do')
+                 .replace(/\bsi\s+/g, 'if ')
+                 .replace(/\bentonces\b/g, 'then')
+                 .replace(/\bsi_no\b/g, 'else')
+                 .replace(/\bromper\b/g, 'break')
+                 .replace(/\[/g, '{').replace(/\]/g, '}');
+
+            // Bucle por cada
+            l = l.replace(/\bpor\s+cada\s+(\w+)\s+desde\s+(.*)\s+hasta\s+(.*)\s+hacer\b/g, 'for $1 = $2, $3 do');
+
+            // Ver (Salida inteligente)
+            if (l.startsWith('ver ')) {
+                l = l.replace(/^ver\s+(.*)/, '_mostrar_inteligente($1)');
+            }
+
+            // Strings interpolados f""
+            l = l.replace(/f"(.*?)"/g, (m, contenido) => {
+                let fmt = contenido.replace(/\{(.*?)\}/g, '" .. tostring($1) .. "');
+                return `("${fmt}"):gsub('^"" .. ',''):gsub(' .. ""$','')`;
+            });
+
+            trad.push(l);
+        });
+
+        try {
+            const codigoFinal = LUA_WEB_HELPER + trad.join('\n');
+            fengari.load(codigoFinal)();
+        } catch (e) {
+            consola.innerText = "❌ ERROR DE SINTAXIS: " + e;
+        }
+    }
+</script>
+</body>
+</html>
