@@ -66,3 +66,17 @@ El motor de Cluaray busca automáticamente archivos `.json` en su directorio. Es
   "absoluto": "math.abs",
   "azar": "math.random"
 }
+```
+
+## 📥 Instalación de Librerías
+Puedes bajar librerías creadas por la comunidad directamente desde nuestro repositorio oficial:
+```
+cluaray --instalar nombre_de_la_libreria
+```
+
+## 🤝 Contribuye a Cluaray-Libs
+Si has creado una librería útil (colores, matemáticas avanzadas, manejo de archivos), ¡compártela!
+Haz un Fork del repositorio Cluaray-Libs.
+Sube tu archivo .json.
+Envía un Pull Request.
+<!-- end list -->
