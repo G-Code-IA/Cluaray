@@ -22,11 +22,18 @@ chmod +x instalar.sh
 # 3. ¡A programar!
 cluaray proyecto.clu
 ```
-## 📘Guía Rápida de Sintaxis
+## 📘 Guía Rápida de Sintaxis
 Cluaray convierte la lógica compleja en palabras simples:
-Comando Función Ejemplo
-dato Define una variable dato puntaje = 100
-ver Muestra texto en pantalla ver "¡Hola Mundo!"
-tarea Define una función tarea saludar() ... fin
-pedir Captura texto del usuario dato nombre = pedir "Tu nombre: "
-si Condicional lógico si x > 0 entonces ... fin
+```markdown
+| Comando | Función | Ejemplo de uso |
+| :--- | :--- | :--- |
+| **dato** | Define una variable local | `dato nivel = 1` |
+| **ver** | Muestra texto o datos en pantalla | `ver "Puntaje: " .. nivel` |
+| **tarea** | Define una función o bloque de código | `tarea inicio() ... fin` |
+| **pedir** | Captura texto del usuario | `dato nombre = pedir "Dime tu nombre"` |
+| **pedir_numero** | Captura un número de forma segura | `dato edad = pedir_numero "Tu edad"` |
+| **si / si_no** | Control condicional | `si x > 5 entonces ... si_no ... fin` |
+| **siempre hacer** | Crea un bucle infinito | `siempre hacer ... romper ... fin` |
+| **por cada** | Bucle contado (estilo for) | `por cada i desde 1 hasta 10 hacer` |
+| **nota** | Añade comentarios al código | `nota Esto es un comentario` |
+```
